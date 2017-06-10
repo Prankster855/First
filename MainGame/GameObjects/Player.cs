@@ -19,7 +19,7 @@ namespace First.MainGame.GameObjects {
 
         public Inventory inventory = new Inventory(20,20);
 
-        //TODO: Collision
+        //TODO: Collision shit
         Vector2 direction;
         float elapsed;
         public float speed;
