@@ -1,6 +1,4 @@
-﻿#define DEBUG
-
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System.Collections.Generic;
@@ -12,6 +10,8 @@ namespace First.MainGame {
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
         Viewport viewport;
+
+        //TODO: refactor screensize
         public static Vector2 screensize;
 
         public Handler handler;
@@ -36,10 +36,8 @@ namespace First.MainGame {
 
         protected override void LoadContent() {
             spriteBatch = new SpriteBatch(GraphicsDevice);
-
-            //Initialize SpriteDictionary
             Sprite.SpriteDictionary = new Dictionary<string, Texture2D>();
-            //Load Sprites
+
             LoadSprites();
         }
 
@@ -66,10 +64,7 @@ namespace First.MainGame {
 
 
         void Start() {
-
             //Custom Addition
-            Random rnd = new Random();
-
             Handler.addGameObject(new Player(new Vector2(0), new Sprite(Sprite.SpriteDictionary ["Player"])));
             Handler.addGameObject(new Selection());
             World.addLight(new Light(Vector2.Zero, 5, null, Color.White));
@@ -77,20 +72,19 @@ namespace First.MainGame {
             World.addLight(new Light(Vector2.Zero + new Vector2(0, 5), 5, null, Color.White));
         }
 
-        float elapsed = 0;
+        private float elapsed = 0;
         protected override void Update(GameTime gameTime) {
             Camera.matrix = Camera.get_transformation(GraphicsDevice);
             Time.deltaTime = (float) gameTime.ElapsedGameTime.TotalSeconds;
             elapsed += Time.deltaTime;
 
-#if DEBUG
             while(elapsed > 1f) {
                 elapsed -= 1f;
                 Console.WriteLine((1 / Time.deltaTime) + " fps");
                 Console.WriteLine(World.map.Count);
 
             }
-#endif
+
 
             //emergency exit
             if(GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed

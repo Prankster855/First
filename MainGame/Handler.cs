@@ -12,14 +12,16 @@ namespace First.MainGame {
     public class Handler {
 
         private static List<GameObject> gameObjects = new List<GameObject>();
+        private static List<GameObject> removeQueue = new List<GameObject>();
+
+        //TODO: refactor input
+        #region Input
         public static KeyboardState keyboardstate = new KeyboardState();
         public static KeyboardState oldKeyboardstate = new KeyboardState();
         public static MouseState mousestate = new MouseState();
         public static MouseState oldMousestate = new MouseState();
         public static List<MouseButton> oldMouseButtons = new List<MouseButton>();
         public static List<MouseButton> MouseButtons = new List<MouseButton>();
-        private static List<GameObject> removeQueue = new List<GameObject>();
-
 
         static public bool pressedOnce(Keys a) {
             if(!oldKeyboardstate.IsKeyDown(a) && keyboardstate.IsKeyDown(a)) {
@@ -40,7 +42,6 @@ namespace First.MainGame {
             }
             return false;
         }
-
         static public void processMouseButtons() {
             oldMouseButtons = MouseButtons;
             MouseButtons = new List<MouseButton>();
@@ -52,6 +53,7 @@ namespace First.MainGame {
             }
 
         }
+        #endregion
 
         static public Vector2 mouseToWorld(MouseState ms) {
             return Vector2.Transform(new Vector2(ms.X, ms.Y), Matrix.Invert(Camera.matrix)) / World.TileSize;
@@ -64,7 +66,6 @@ namespace First.MainGame {
         static public void removeGameObject(GameObject go) {
             removeQueue.Add(go);
         }
-
         static private void removequeue() {
             foreach(var go in removeQueue) {
                 gameObjects.Remove(go);

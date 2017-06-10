@@ -22,19 +22,11 @@ namespace First.MainGame {
         //rendering
         public const float layerincrement = 1f/2048f;
 
-        //random
+        #region Random
         public static int seed=0;
         private static Vector2 oldHeld;
         private static Vector2 held = Vector2.Zero;
-
-
-        static public void addLight(Light light) {
-            lights.Add(light);
-        }
-
-        static public void removeLight(Light light) {
-            lights.Remove(light);
-        }
+        #endregion
 
         static public void Update() {
 
@@ -61,11 +53,21 @@ namespace First.MainGame {
 
         }
 
+        #region Lights
+
         //lights
         public static float globalLight = .1f;
         public static List<Light> lights = new List<Light>();
         public static Dictionary<Vector2, Light> visibleLights = new Dictionary<Vector2, Light>();
         public static Dictionary<Vector2, Color> lightMap = new Dictionary<Vector2, Color>();
+
+        static public void addLight(Light light) {
+            lights.Add(light);
+        }
+
+        static public void removeLight(Light light) {
+            lights.Remove(light);
+        }
 
         static private void processVisibleLights() {
 
@@ -90,8 +92,6 @@ namespace First.MainGame {
 
             }
         }
-
-
 
         private static void processLightMap() {
             lightMap.Clear();
@@ -138,6 +138,33 @@ namespace First.MainGame {
             return c;
         }
 
+        static public Color getLightValue(Vector2 position) {
+            if(lightMap.ContainsKey(position)) {
+                return lightMap [position];
+            } else {
+                return Color.Blue;
+            }
+        }
+
+        #endregion
+
+        static private void createTile(Vector2 position) {
+            seed++;
+            int baseseed = (int) DateTime.Now.Ticks;
+            Random rnd = new Random(baseseed + seed);
+
+            Tile a = new Tile(position);
+            if(rnd.Next(1, 20) == 2) {
+                a.bottom = new Grass(a);
+                a.top = new LongGrass(a);
+            } else {
+                a.bottom = new Grass(a);
+            }
+
+            map.Add(position, a);
+
+        }
+
         static private void processVisibleTiles() {
             visible.Clear();
             for(var x = (int) ((Camera.Pos.X / World.TileSize) - Math.Round(Game1.screensize.X / 2 / World.TileSize)) - 2; x < (int) ((Camera.Pos.X / World.TileSize) + Math.Round(Game1.screensize.X / 2 / World.TileSize)) + 2; x++) {
@@ -167,6 +194,7 @@ namespace First.MainGame {
                 } else if(Handler.pressedOnce(MouseButton.Left)) {
                     if(Selection.Allowed) {
                         map [a].Interact(MouseButton.Left);
+
                     }
                 }
 
@@ -177,32 +205,6 @@ namespace First.MainGame {
                     map [oldHeld].UnHold();
                 }
 
-            }
-        }
-
-        static private void createTile(Vector2 position) {
-            seed++;
-            int baseseed = (int) DateTime.Now.Ticks;
-            Random rnd = new Random(baseseed + seed);
-
-            Tile a = new Tile(position);
-            if(rnd.Next(1, 20) == 2) {
-                a.bottom = new Grass(a);
-                a.top = new LongGrass(a);
-            } else {
-                a.bottom = new Grass(a);
-            }
-
-            map.Add(position, a);
-
-        }
-
-
-        static public Color getLightValue(Vector2 position) {
-            if(lightMap.ContainsKey(position)) {
-                return lightMap [position];
-            } else {
-                return Color.Blue;
             }
         }
 
