@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<SourceFileCollection xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <Profile>Reach</Profile>
+  <Platform>DesktopGL</Platform>
+  <Config />
+  <SourceFiles>
+    <File>C:/Users/Melissa/Documents/Visual Studio 2015/Projects/FirstGL/FirstGL/Content/Blank.png</File>
+    <File>C:/Users/Melissa/Documents/Visual Studio 2015/Projects/FirstGL/FirstGL/Content/CanMove.png</File>
+    <File>C:/Users/Melissa/Documents/Visual Studio 2015/Projects/FirstGL/FirstGL/Content/Car.png</File>
+    <File>C:/Users/Melissa/Documents/Visual Studio 2015/Projects/FirstGL/FirstGL/Content/Concrete.png</File>
+    <File>C:/Users/Melissa/Documents/Visual Studio 2015/Projects/FirstGL/FirstGL/Content/CursorBlue.png</File>
+    <File>C:/Users/Melissa/Documents/Visual Studio 2015/Projects/FirstGL/FirstGL/Content/CursorRed.png</File>
+    <File>C:/Users/Melissa/Documents/Visual Studio 2015/Projects/FirstGL/FirstGL/Content/CursorWhite.png</File>
+    <File>C:/Users/Melissa/Documents/Visual Studio 2015/Projects/FirstGL/FirstGL/Content/Error.png</File>
+    <File>C:/Users/Melissa/Documents/Visual Studio 2015/Projects/FirstGL/FirstGL/Content/Grass.png</File>
+    <File>C:/Users/Melissa/Documents/Visual Studio 2015/Projects/FirstGL/FirstGL/Content/LongGrass.png</File>
+    <File>C:/Users/Melissa/Documents/Visual Studio 2015/Projects/FirstGL/FirstGL/Content/NotSelectable.png</File>
+    <File>C:/Users/Melissa/Documents/Visual Studio 2015/Projects/FirstGL/FirstGL/Content/Overlay.png</File>
+    <File>C:/Users/Melissa/Documents/Visual Studio 2015/Projects/FirstGL/FirstGL/Content/Player.png</File>
+    <File>C:/Users/Melissa/Documents/Visual Studio 2015/Projects/FirstGL/FirstGL/Content/Selectable.png</File>
+    <File>C:/Users/Melissa/Documents/Visual Studio 2015/Projects/FirstGL/FirstGL/Content/White.png</File>
+    <File>C:/Users/Melissa/Documents/Visual Studio 2015/Projects/FirstGL/FirstGL/Content/Black.png</File>
+  </SourceFiles>
+</SourceFileCollection>
