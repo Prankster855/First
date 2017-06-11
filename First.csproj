@@ -45,9 +45,11 @@
     <Compile Include="MainGame\GameBase.cs" />
     <Compile Include="MainGame\Camera.cs" />
     <Compile Include="MainGame\GameObject.cs" />
-    <Compile Include="MainGame\GameObjects\Light.cs" />
+    <Compile Include="MainGame\Light.cs" />
     <Compile Include="MainGame\GameObjects\Player.cs" />
+    <Compile Include="MainGame\GraphicalSettings.cs" />
     <Compile Include="MainGame\Handler.cs" />
+    <Compile Include="MainGame\Input.cs" />
     <Compile Include="MainGame\Inventory.cs" />
     <Compile Include="MainGame\GroundItem.cs" />
     <Compile Include="MainGame\Item.cs" />

@@ -36,7 +36,7 @@ namespace First.MainGame {
               Matrix.CreateTranslation(new Vector3(-_pos.X, -_pos.Y, 0)) *
                                          Matrix.CreateRotationZ(_rotation) *
                                          Matrix.CreateScale(new Vector3(_zoom, _zoom, 1)) *
-                                         Matrix.CreateTranslation(new Vector3(Game1.screensize.X * 0.5f, Game1.screensize.Y * 0.5f, 0));
+                                         Matrix.CreateTranslation(new Vector3(GraphicalSettings.screensize.X * 0.5f, GraphicalSettings.screensize.Y * 0.5f, 0));
             return _transform;
         }
     }

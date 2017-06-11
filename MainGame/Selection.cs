@@ -22,10 +22,10 @@ namespace First.MainGame {
         }
 
         public override void Update() {
-            Vector2 a = Handler.mouseToWorld(Handler.mousestate);
+            Vector2 a = Handler.mouseToWorld(Input.mousestate);
             position = new Vector2((float) Math.Round(a.X - .5), (float) Math.Round(a.Y - .5));
             Player p = Player.getPlayer();
-            if(Vector2.Distance(Handler.mouseToWorld(Handler.mousestate), p.position) > p.reach) {
+            if(Vector2.Distance(Handler.mouseToWorld(Input.mousestate), p.position) > p.reach) {
                 Cursor = nullCursor;
                 Allowed = false;
             } else {
@@ -38,8 +38,8 @@ namespace First.MainGame {
         }
 
         public override void Render(SpriteBatch sb) {
-            Cursor.Draw(sb, Handler.mouseToWorld(Handler.mousestate), (int) Layer.Mouse, 1 / Camera._zoom);
-            Vector2 a = Handler.mouseToWorld(Handler.mousestate) - new Vector2(.5f, .5f);
+            Cursor.Draw(sb, Handler.mouseToWorld(Input.mousestate), (int) Layer.Mouse, 1 / Camera._zoom);
+            Vector2 a = Handler.mouseToWorld(Input.mousestate) - new Vector2(.5f, .5f);
             Vector2 b = new Vector2((float) Math.Round(a.X), (float) Math.Round(a.Y));
             if(Allowed) {
                 CanSelect.Draw(sb, b, (int) Layer.Selection);

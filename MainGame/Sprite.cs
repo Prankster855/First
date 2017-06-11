@@ -41,32 +41,12 @@ namespace First.MainGame {
         }
 
         public void Draw(SpriteBatch sb, Vector2 position, int layer, float scale) {
+
             Vector2 a = Camera.Pos / World.TileSize;
-
-            Color c;
-
-
-            if(layer < (int) Layer.Light) {
-                if(layer == (int) Layer.Selection) {
-                    c = Color.White;
-                } else {
-                    c = World.getLightMap(position);
-                }
-            } else {
-                c = Color.White;
-            }
-
-            if(position.X > a.X - (Game1.screensize.X / World.TileSize * 2) &&
-                position.X < a.X + (Game1.screensize.X / World.TileSize * 2) &&
-                position.Y > a.Y - (Game1.screensize.Y / World.TileSize * 2) &&
-                position.Y < a.Y + (Game1.screensize.Y / World.TileSize * 2)) {
-                sb.Draw(sprite, new Vector2(
-                                (position.X * World.TileSize),
-                                (position.Y * World.TileSize)),
-                            null, c, 0f, Vector2.Zero, scale, SpriteEffects.None, (float) layer / 2048);
-            }
-
-
+            sb.Draw(sprite, new Vector2(
+                            (position.X * World.TileSize),
+                            (position.Y * World.TileSize)),
+                        null, Color.White, 0f, Vector2.Zero, scale, SpriteEffects.None, (float) layer / 2048);
 
         }
 

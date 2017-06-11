@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Xna.Framework.Graphics;
 using First.MainGame.Units;
+using First.MainGame;
 using Microsoft.Xna.Framework;
 
 namespace First.MainGame {
@@ -76,7 +77,6 @@ namespace First.MainGame {
 
         public virtual void Interact(MouseButton mb) {
             Console.WriteLine("Clicked on " + position + " : " + this);
-            Console.WriteLine(World.getLightMap(position));
         }
 
 

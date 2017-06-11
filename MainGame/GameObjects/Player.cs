@@ -40,7 +40,6 @@ namespace First.MainGame.GameObjects {
             reach = 4;
             movementDistance = (1f / 4f);
             speed = 2.5f;
-            //DEV
         }
 
         public override void Update() {
@@ -57,28 +56,28 @@ namespace First.MainGame.GameObjects {
         void Movement() {
             if(alternateMovement) {
                 alternateMovement = false;
-                if(Handler.keyboardstate.IsKeyDown(Keys.D)) {
+                if(Input.keyboardstate.IsKeyDown(Keys.D)) {
                     //right
                     position.X += movementDistance;
 
                     elapsed = 0f;
                     return;
                 }
-                if(Handler.keyboardstate.IsKeyDown(Keys.A)) {
+                if(Input.keyboardstate.IsKeyDown(Keys.A)) {
                     //left
                     position.X += -movementDistance;
 
                     elapsed = 0f;
                     return;
                 }
-                if(Handler.keyboardstate.IsKeyDown(Keys.W)) {
+                if(Input.keyboardstate.IsKeyDown(Keys.W)) {
                     //up
                     position.Y += -movementDistance;
 
                     elapsed = 0f;
                     return;
                 }
-                if(Handler.keyboardstate.IsKeyDown(Keys.S)) {
+                if(Input.keyboardstate.IsKeyDown(Keys.S)) {
                     //down
                     position.Y += movementDistance;
 
@@ -89,21 +88,21 @@ namespace First.MainGame.GameObjects {
 
             } else {
                 alternateMovement = true;
-                if(Handler.keyboardstate.IsKeyDown(Keys.W)) {
+                if(Input.keyboardstate.IsKeyDown(Keys.W)) {
                     //up
                     position.Y += -movementDistance;
 
                     elapsed = 0f;
                     return;
                 }
-                if(Handler.keyboardstate.IsKeyDown(Keys.S)) {
+                if(Input.keyboardstate.IsKeyDown(Keys.S)) {
                     //down
                     position.Y += movementDistance;
 
                     elapsed = 0f;
                     return;
                 }
-                if(Handler.keyboardstate.IsKeyDown(Keys.A)) {
+                if(Input.keyboardstate.IsKeyDown(Keys.A)) {
                     //left
                     position.X += -movementDistance;
 
@@ -111,7 +110,7 @@ namespace First.MainGame.GameObjects {
                     return;
                 }
 
-                if(Handler.keyboardstate.IsKeyDown(Keys.D)) {
+                if(Input.keyboardstate.IsKeyDown(Keys.D)) {
                     //right
                     position.X += movementDistance;
 

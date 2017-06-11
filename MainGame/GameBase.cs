@@ -4,6 +4,7 @@ using Microsoft.Xna.Framework.Input;
 using System.Collections.Generic;
 using System;
 using First.MainGame.GameObjects;
+using First.MainGame;
 
 namespace First.MainGame {
     public class Game1 : Game {
@@ -11,17 +12,15 @@ namespace First.MainGame {
         SpriteBatch spriteBatch;
         Viewport viewport;
 
-        //TODO: refactor screensize
-        public static Vector2 screensize;
-
         public Handler handler;
 
         public Game1() {
+
+            GraphicalSettings.screensize = new Vector2(1280, 720);
             graphics = new GraphicsDeviceManager(this);
-            graphics.PreferredBackBufferWidth = 1280;
-            graphics.PreferredBackBufferHeight = 720;
+            graphics.PreferredBackBufferWidth = (int) GraphicalSettings.screensize.X;
+            graphics.PreferredBackBufferHeight = (int) GraphicalSettings.screensize.Y;
             graphics.SynchronizeWithVerticalRetrace = false;
-            screensize = new Vector2(graphics.PreferredBackBufferWidth, graphics.PreferredBackBufferHeight);
             TargetElapsedTime = TimeSpan.FromSeconds(1f / 144f);
             Content.RootDirectory = "Content";
             IsFixedTimeStep = false;
@@ -67,9 +66,9 @@ namespace First.MainGame {
             //Custom Addition
             Handler.addGameObject(new Player(new Vector2(0), new Sprite(Sprite.SpriteDictionary ["Player"])));
             Handler.addGameObject(new Selection());
-            World.addLight(new Light(Vector2.Zero, 5, null, Color.White));
-            World.addLight(new Light(Vector2.Zero + new Vector2(5, 0), 5, null, Color.White));
-            World.addLight(new Light(Vector2.Zero + new Vector2(0, 5), 5, null, Color.White));
+            Light.addLight(new Light(Vector2.Zero, 5, null, Color.White));
+            Light.addLight(new Light(Vector2.Zero + new Vector2(5, 0), 6, null, Color.White));
+            Light.addLight(new Light(Vector2.Zero + new Vector2(0, 5), 5, null, Color.White));
         }
 
         private float elapsed = 0;
