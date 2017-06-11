@@ -1,10 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+
 namespace First.MainGame.GameObjects {
     public class Player : GameObject {
 
@@ -22,12 +26,14 @@ namespace First.MainGame.GameObjects {
         //TODO: Collisions?
         Vector2 direction;
         float elapsed;
+        [JsonIgnore]
         public float speed;
         float movementDistance;
         bool alternateMovement;
+        [JsonIgnore]
         public int reach;
-
-        Light light;
+        [JsonIgnore]
+        public Light light;
 
         public static Player getPlayer() {
             return Player.player;
@@ -41,7 +47,7 @@ namespace First.MainGame.GameObjects {
             movementDistance = (1f / 4f);
             speed = 2.5f;
 
-            light = new Light(position, 4, .25f, null);
+            light = new Light(position, 4, .25f, Color.White);
             Light.addLight(light);
         }
 
@@ -60,6 +66,13 @@ namespace First.MainGame.GameObjects {
         }
 
         void Movement() {
+            if(Input.keyboardstate.IsKeyDown(Keys.T)) {
+                Handler.savestate.Load();
+            }
+            if(Input.keyboardstate.IsKeyDown(Keys.R)) {
+                Handler.savestate.Save();
+            }
+
             if(alternateMovement) {
                 alternateMovement = false;
                 if(Input.keyboardstate.IsKeyDown(Keys.D)) {

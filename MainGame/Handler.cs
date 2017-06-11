@@ -11,8 +11,9 @@ using System.Threading.Tasks;
 namespace First.MainGame {
     public class Handler {
 
-        private static List<GameObject> gameObjects = new List<GameObject>();
+        public static List<GameObject> gameObjects = new List<GameObject>();
         private static List<GameObject> removeQueue = new List<GameObject>();
+        public static SaveState savestate = new SaveState();
 
         static public Vector2 mouseToWorld(MouseState ms) {
             return Vector2.Transform(new Vector2(ms.X, ms.Y), Matrix.Invert(Camera.matrix)) / World.TileSize;

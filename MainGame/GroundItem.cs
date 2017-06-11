@@ -20,7 +20,7 @@ namespace First.MainGame {
             this.item = item;
             sprite = item.sprite;
         }
-        public GroundItem(Unit unit) : base(unit.position + new Vector2(.5f, .5f), new Sprite(Sprite.SpriteDictionary ["Error"]), Layer.Item) {
+        public GroundItem(Unit unit) : base(unit.parent.position + new Vector2(.5f, .5f), new Sprite(Sprite.SpriteDictionary ["Error"]), Layer.Item) {
             item = new Item(unit.type);
             sprite = item.sprite;
         }

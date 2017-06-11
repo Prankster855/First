@@ -5,6 +5,8 @@ using System.Collections.Generic;
 using System;
 using First.MainGame.GameObjects;
 using First.MainGame;
+using System.IO;
+using Newtonsoft.Json;
 
 namespace First.MainGame {
     public class Game1 : Game {
@@ -64,7 +66,8 @@ namespace First.MainGame {
         }
 
         protected override void UnloadContent() {
-            //maybe later
+            Dictionary<Vector2, Tile> map = World.map;
+            Handler.savestate.Save();
         }
 
 
@@ -72,7 +75,7 @@ namespace First.MainGame {
             //Custom Addition
             Handler.addGameObject(new Player(new Vector2(0), new Sprite(Sprite.SpriteDictionary ["Player"])));
             Handler.addGameObject(new Selection());
-            Light.addLight(new Light(Vector2.Zero, 5, null, Color.White));
+            Light.addLight(new Light(Vector2.Zero, 5, .5f, Color.White));
             Light.addLight(new Light(Vector2.Zero + new Vector2(5, 0), 6, .6f, Color.White));
             Light.addLight(new Light(Vector2.Zero + new Vector2(0, 5), 5, .25f, Color.White));
         }
@@ -87,7 +90,6 @@ namespace First.MainGame {
                 elapsed -= 1f;
                 Console.WriteLine((1 / Time.deltaTime) + " fps");
                 Console.WriteLine(World.map.Count);
-
             }
 
 

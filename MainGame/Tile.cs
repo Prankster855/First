@@ -6,20 +6,27 @@ using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using First.MainGame.Units;
+using Newtonsoft.Json;
 
 namespace First.MainGame {
-    public class Tile : GameObject {
-
+    public class Tile {
+        [JsonProperty(PropertyName = "b")]
         public Unit bottom;
+        [JsonProperty(PropertyName = "t")]
         public Unit top;
 
-        public Tile(Vector2 position) : base(position, new Sprite(), Layer.Ground) {
+        [JsonIgnore]
+        public Layer layer = Layer.Ground;
+        [JsonIgnore]
+        public Vector2 position;
+
+        public Tile(Vector2 position) {
             bottom = new Air(this);
             top = new Air(this);
+            this.position = position;
         }
 
-        public override void Update() {
-            base.Update();
+        public void Update() {
             bottom.Update();
             top.Update();
         }
@@ -49,7 +56,7 @@ namespace First.MainGame {
         }
 
 
-        public override void Render(SpriteBatch sb) {
+        public void Render(SpriteBatch sb) {
             if(top.isOpaque) {
                 top.Render(sb, 1);
             } else {

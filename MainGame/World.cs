@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 using Microsoft.Xna.Framework.Graphics;
 using First.MainGame.Units;
 using Microsoft.Xna.Framework;
+using Newtonsoft.Json;
+using System.IO;
 
 namespace First.MainGame {
     public class World {
@@ -31,6 +33,7 @@ namespace First.MainGame {
 
         static bool night = false;
 
+
         static public void Update() {
 
             if(!night) {
@@ -53,10 +56,6 @@ namespace First.MainGame {
             //update visible tiles
             foreach(Tile t in visible) {
                 t.Update();
-            }
-            //update lights
-            foreach(Light l in Light.lights) {
-                l.Update();
             }
 
             //process visible lights
@@ -131,11 +130,13 @@ namespace First.MainGame {
         }
 
         static public void Render(SpriteBatch sb) {
+
             foreach(Tile t in visible) {
                 t.Render(sb);
             }
-            Light.Render(sb, true);
-        }
 
+            Light.Render(sb, true);
+
+        }
     }
 }

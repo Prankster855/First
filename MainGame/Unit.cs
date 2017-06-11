@@ -6,30 +6,38 @@ using System.Threading.Tasks;
 using Microsoft.Xna.Framework.Graphics;
 using First.MainGame.Units;
 using Microsoft.Xna.Framework;
+using Newtonsoft.Json;
 
 namespace First.MainGame {
-    public class Unit : GameObject {
+    public class Unit {
 
-        public Tile parent;
+        [JsonProperty(PropertyName = "t")]
         public ItemType type;
-
-        //Defaults
-        //Properties
+        [JsonIgnore]
+        public Tile parent;
+        [JsonIgnore]
         public float durability = 1f;
+        [JsonIgnore]
         public bool isSolid = false;
+        [JsonIgnore]
         public bool isOpaque = true;
+        [JsonIgnore]
         public bool isBreakable = false;
+        [JsonIgnore]
         public bool held = false;
-        //Trackers
+        [JsonIgnore]
         private float breaktime = 0f;
+        [JsonIgnore]
+        public Sprite sprite;
 
-        public Unit(Tile parent, ItemType type) : base(parent.position, new Sprite(), parent.layer) {
+        [JsonConstructor]
+        public Unit(Tile parent, ItemType type) {
             this.parent = parent;
             this.type = type;
             sprite = Item.ItemDictionary [type];
         }
 
-        public Unit(Tile parent) : base(parent.position, new Sprite(), parent.layer) {
+        public Unit(Tile parent) {
             this.parent = parent;
             type = ItemType.Error;
 
@@ -41,8 +49,8 @@ namespace First.MainGame {
             parent.top = new Air(parent);
         }
 
-        public override void Update() {
-            base.Update();
+        public void Update() {
+
         }
 
         public void Hold() {
@@ -69,13 +77,36 @@ namespace First.MainGame {
 
 
         public virtual void Interact(MouseButton mb) {
-            Console.WriteLine("Clicked on " + position + " : " + this);
+            Console.WriteLine("Clicked on " + parent.position + " : " + this);
         }
 
 
 
         public void Render(SpriteBatch sb, int layer) {
             sprite.Draw(sb, parent.position, (int) parent.layer + layer);
+        }
+
+        public static Unit getUnit(Tile parent, ItemType it) {
+            switch(it) {
+                case ItemType.Air:
+                return new Air(parent);
+
+                case ItemType.Error:
+                Console.WriteLine("ERROR");
+                return new Air(parent);
+
+                case ItemType.Grass:
+                return new Grass(parent);
+
+                case ItemType.LongGrass:
+                return new LongGrass(parent);
+
+                default:
+                Console.WriteLine("ERROR IN GETTING UNIT");
+                break;
+            }
+            Console.WriteLine("ERROR IN GETTING UNIT");
+            return new Unit(parent);
         }
 
     }

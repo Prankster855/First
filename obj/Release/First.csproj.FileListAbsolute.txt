@@ -31,3 +31,5 @@ c:\users\melissa\documents\visual studio 2015\Projects\FirstGL\FirstGL\obj\Relea
 C:\Users\Melissa\Documents\Visual Studio 2015\Projects\FirstGL\FirstGL\obj\Release\First.csprojResolveAssemblyReference.cache
 C:\Users\Melissa\Documents\Visual Studio 2015\Projects\FirstGL\FirstGL\bin\DesktopGL\AnyCPU\Release\Content\Black.xnb
 C:\Users\Melissa\Documents\Visual Studio 2015\Projects\FirstGL\FirstGL\bin\DesktopGL\AnyCPU\Release\Content\White.xnb
+C:\Users\Melissa\Documents\Visual Studio 2015\Projects\FirstGL\FirstGL\bin\DesktopGL\AnyCPU\Release\Newtonsoft.Json.dll
+C:\Users\Melissa\Documents\Visual Studio 2015\Projects\FirstGL\FirstGL\bin\DesktopGL\AnyCPU\Release\Newtonsoft.Json.xml

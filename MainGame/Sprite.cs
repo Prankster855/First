@@ -10,7 +10,7 @@ using First.MainGame;
 namespace First.MainGame {
     public class Sprite {
 
-        public static Dictionary<String, Texture2D> SpriteDictionary;
+        public static Dictionary<String, Texture2D> SpriteDictionary = new Dictionary<string, Texture2D>();
 
         public static void AddSprite(String name, Texture2D sprite) {
             SpriteDictionary.Add(name, sprite);
@@ -49,8 +49,6 @@ namespace First.MainGame {
                         null, Color.White, 0f, Vector2.Zero, scale, SpriteEffects.None, (float) layer / 2048);
 
         }
-
-
 
     }
 }

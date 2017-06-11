@@ -5,22 +5,35 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using First.MainGame;
+using Newtonsoft.Json;
+
 namespace First.MainGame {
-    public class Light : GameObject {
+    public class Light {
 
         //TODO: color
 
         #region GameObject
-
-        public Color color;
+        [JsonProperty(PropertyName = "p")]
+        public Vector2 position;
+        [JsonProperty(PropertyName = "r")]
         public int radius;
+        [JsonProperty(PropertyName = "i")]
         public float intensity;
+        [JsonProperty(PropertyName = "c")]
+        public Color color;
+        private Sprite sprite;
 
-        public Light(Vector2 position, int? radius, float? intensity, Color? color)
-            : base(position, new Sprite(Sprite.SpriteDictionary ["Black"]), Layer.Light) {
-            this.color = color ?? Color.Red;
-            this.radius = radius ?? 6;
-            this.intensity = 1 - intensity ?? .5f;
+        public Light(Vector2 position, int radius, float intensity, Color color) {
+            this.position = position;
+            this.color = color;
+            this.radius = radius;
+            this.intensity = 1 - intensity;
+            sprite = new Sprite(Sprite.SpriteDictionary ["Black"]);
+        }
+
+        public void Remove() {
+            Light.lights.Remove(this);
         }
         #endregion
 

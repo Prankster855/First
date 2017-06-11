@@ -1,7 +1,6 @@
 ﻿using System;
 using First.MainGame;
-
-namespace FirstGL {
+namespace First {
     /// <summary>
     /// The main class.
     /// </summary>

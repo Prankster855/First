@@ -5,12 +5,15 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Newtonsoft.Json;
 
 namespace First.MainGame {
     public class GameObject {
 
         public Vector2 position;
+        [JsonIgnore]
         public Sprite sprite;
+        [JsonIgnore]
         public Layer layer;
 
         public GameObject(Vector2 position, Sprite sprite, Layer layer) {
