@@ -14,7 +14,7 @@ namespace First.MainGame {
 
         static Vector2 offset = Vector2.Zero;
 
-        static private int daylength = 5;
+        static private int daylength = 30;
 
         //tiles
         public static Dictionary <Vector2, Tile> map = new Dictionary<Vector2, Tile>();

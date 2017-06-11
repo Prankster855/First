@@ -8,6 +8,8 @@ using Microsoft.Xna.Framework.Graphics;
 namespace First.MainGame {
     public class Light : GameObject {
 
+        //TODO: color
+
         #region GameObject
 
         public Color color;
@@ -18,17 +20,15 @@ namespace First.MainGame {
             : base(position, new Sprite(Sprite.SpriteDictionary ["Black"]), Layer.Light) {
             this.color = color ?? Color.Red;
             this.radius = radius ?? 6;
-            this.intensity = intensity ?? 1f;
+            this.intensity = 1 - intensity ?? .5f;
         }
         #endregion
 
-
-
-        public static float globalLight = minlight;
-        public static float minlight = .1f;
-        public static float maxlight = .9f;
+        public static float globalLight = maxlight;
+        public static float minlight = .2f;
+        public static float maxlight = .6f;
         public static List<Light> lights = new List<Light>();
-        public static Dictionary<Vector2, Light> visibleLights = new Dictionary<Vector2, Light>();
+        public static Dictionary<Vector2, List<Light>> visibleLights = new Dictionary<Vector2, List<Light>>();
         public static Dictionary<Vector2, float> LightMap = new Dictionary<Vector2, float>();
 
         #region Add/Remove
@@ -43,10 +43,17 @@ namespace First.MainGame {
 
         public static void processVisibleLights() {
 
-            Dictionary<Vector2, Light> temp = new Dictionary<Vector2, Light>();
+            Dictionary<Vector2, List<Light>> temp = new Dictionary<Vector2, List<Light>>();
 
             foreach(Light l in lights) {
-                temp.Add(l.position, l);
+
+                Vector2 a = new Vector2((float) Math.Round(l.position.X), (float) Math.Round(l.position.Y));
+                if(temp.ContainsKey(a)) {
+                    temp [a].Add(l);
+                } else {
+                    temp.Add(a, new List<Light>());
+                    temp [a].Add(l);
+                }
             }
 
             visibleLights.Clear();
@@ -56,11 +63,22 @@ namespace First.MainGame {
 
                     Vector2 v = new Vector2(x, y);
                     if(temp.ContainsKey(v)) {
-                        visibleLights.Add(v, temp [v]);
+                        foreach(Light l in temp [v]) {
+                            addToVisible(v, l);
+                        }
                     }
 
                 }
 
+            }
+        }
+
+        public static void addToVisible(Vector2 v, Light l) {
+            if(visibleLights.ContainsKey(v)) {
+                visibleLights [v].Add(l);
+            } else {
+                visibleLights.Add(v, new List<Light>());
+                visibleLights [v].Add(l);
             }
         }
 
@@ -69,11 +87,12 @@ namespace First.MainGame {
             foreach(Tile t in World.visible) {
                 addToLightMap(t.position, globalLight);
 
-                foreach(Light l in visibleLights.Values) {
-
-                    float dis = Vector2.Distance(t.position, l.position);
-                    if(dis <= l.radius) {
-                        addToLightMap(t.position, dis / l.radius);
+                foreach(List<Light> ll in visibleLights.Values) {
+                    foreach(Light l in ll) {
+                        float dis = Vector2.Distance(t.position, l.position);
+                        if(dis <= l.radius) {
+                            addToLightMap(t.position, (dis / l.radius) * l.intensity);
+                        }
                     }
                 }
             }

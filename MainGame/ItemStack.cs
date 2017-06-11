@@ -11,7 +11,7 @@ namespace First.MainGame {
         //Item item;
         //int count;
 
-        public ItemStack(Item item) {
+        public ItemStack(ItemType type) {
 
         }
 

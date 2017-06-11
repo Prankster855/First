@@ -19,7 +19,7 @@ namespace First.MainGame {
 
             for(int x = 0; x < width; x++) {
                 for(int y = 0; y < height; y++) {
-                    contents [x, y] = new ItemStack(new Item());
+                    contents [x, y] = new ItemStack(ItemType.Air);
                 }
             }
         }

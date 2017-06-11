@@ -41,6 +41,7 @@ namespace First.MainGame {
         }
 
         void LoadSprites() {
+            //Define Sprites
             Sprite.AddSprite("Car", Content.Load<Texture2D>("Car"));
             Sprite.AddSprite("Player", Content.Load<Texture2D>("player"));
             Sprite.AddSprite("Grass", Content.Load<Texture2D>("grass"));
@@ -55,6 +56,11 @@ namespace First.MainGame {
             Sprite.AddSprite("LongGrass", Content.Load<Texture2D>("LongGrass"));
             Sprite.AddSprite("White", Content.Load<Texture2D>("White"));
             Sprite.AddSprite("Black", Content.Load<Texture2D>("Black"));
+            //Define Items
+            Item.ItemDictionary.Add(ItemType.Air, new Sprite(Sprite.SpriteDictionary ["Blank"]));
+            Item.ItemDictionary.Add(ItemType.Error, new Sprite(Sprite.SpriteDictionary ["Error"]));
+            Item.ItemDictionary.Add(ItemType.Grass, new Sprite(Sprite.SpriteDictionary ["Grass"]));
+            Item.ItemDictionary.Add(ItemType.LongGrass, new Sprite(Sprite.SpriteDictionary ["LongGrass"]));
         }
 
         protected override void UnloadContent() {
@@ -67,8 +73,8 @@ namespace First.MainGame {
             Handler.addGameObject(new Player(new Vector2(0), new Sprite(Sprite.SpriteDictionary ["Player"])));
             Handler.addGameObject(new Selection());
             Light.addLight(new Light(Vector2.Zero, 5, null, Color.White));
-            Light.addLight(new Light(Vector2.Zero + new Vector2(5, 0), 6, null, Color.White));
-            Light.addLight(new Light(Vector2.Zero + new Vector2(0, 5), 5, null, Color.White));
+            Light.addLight(new Light(Vector2.Zero + new Vector2(5, 0), 6, .6f, Color.White));
+            Light.addLight(new Light(Vector2.Zero + new Vector2(0, 5), 5, .25f, Color.White));
         }
 
         private float elapsed = 0;

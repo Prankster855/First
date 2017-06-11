@@ -8,7 +8,7 @@ using Microsoft.Xna.Framework.Input;
 namespace First.MainGame.GameObjects {
     public class Player : GameObject {
 
-        static Player player;
+        public static Player player;
 
         public Player(Vector2 position, Sprite sprite)
         : base(position, sprite, Layer.Player) {
@@ -27,6 +27,8 @@ namespace First.MainGame.GameObjects {
         bool alternateMovement;
         public int reach;
 
+        Light light;
+
         public static Player getPlayer() {
             return Player.player;
         }
@@ -34,16 +36,20 @@ namespace First.MainGame.GameObjects {
         public override void Init() {
             base.Init();
             alternateMovement = false;
-
             direction = new Vector2(0, 0);
-
             reach = 4;
             movementDistance = (1f / 4f);
             speed = 2.5f;
+
+            light = new Light(position, 4, .25f, null);
+            Light.addLight(light);
         }
 
         public override void Update() {
             base.Update();
+
+            light.position = position;
+
             elapsed += Time.deltaTime;
             if(elapsed > (1f / (speed / movementDistance))) {
                 Camera.zoomtarget = 2f;

@@ -5,14 +5,13 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Xna.Framework.Graphics;
 using First.MainGame.Units;
-using First.MainGame;
 using Microsoft.Xna.Framework;
 
 namespace First.MainGame {
     public class Unit : GameObject {
 
         public Tile parent;
-        public UnitType type;
+        public ItemType type;
 
         //Defaults
         //Properties
@@ -24,27 +23,21 @@ namespace First.MainGame {
         //Trackers
         private float breaktime = 0f;
 
-        public Unit(Tile parent, UnitType type, Sprite sprite) : base(parent.position, new Sprite(), parent.layer) {
+        public Unit(Tile parent, ItemType type) : base(parent.position, new Sprite(), parent.layer) {
             this.parent = parent;
-            this.sprite = sprite;
             this.type = type;
-        }
-
-        public Unit(Tile parent, UnitType type) : base(parent.position, new Sprite(), parent.layer) {
-            this.parent = parent;
-            type = UnitType.Error;
-
+            sprite = Item.ItemDictionary [type];
         }
 
         public Unit(Tile parent) : base(parent.position, new Sprite(), parent.layer) {
             this.parent = parent;
-            type = UnitType.Error;
+            type = ItemType.Error;
 
         }
 
 
         public virtual void Drop() {
-            new GroundItem(this);
+            Handler.addGameObject(new GroundItem(this));
             parent.top = new Air(parent);
         }
 

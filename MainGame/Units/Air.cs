@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace First.MainGame.Units {
     public class Air : Unit {
-        public Air(Tile parent) : base(parent, UnitType.Air) {
+        public Air(Tile parent) : base(parent, ItemType.Air) {
             sprite = new Sprite(Sprite.SpriteDictionary ["Blank"]);
             isOpaque = false;
         }

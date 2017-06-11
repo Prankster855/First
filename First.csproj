@@ -45,6 +45,7 @@
     <Compile Include="MainGame\GameBase.cs" />
     <Compile Include="MainGame\Camera.cs" />
     <Compile Include="MainGame\GameObject.cs" />
+    <Compile Include="MainGame\ItemType.cs" />
     <Compile Include="MainGame\Light.cs" />
     <Compile Include="MainGame\GameObjects\Player.cs" />
     <Compile Include="MainGame\GraphicalSettings.cs" />
@@ -64,7 +65,6 @@
     <Compile Include="MainGame\Units\Air.cs" />
     <Compile Include="MainGame\Units\Grass.cs" />
     <Compile Include="MainGame\Units\LongGrass.cs" />
-    <Compile Include="MainGame\UnitType.cs" />
     <Compile Include="MainGame\World.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

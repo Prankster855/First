@@ -7,7 +7,7 @@ using First.MainGame;
 
 namespace First.MainGame.Units {
     public class Grass : Unit {
-        public Grass(Tile parent) : base(parent, UnitType.Grass) {
+        public Grass(Tile parent) : base(parent, ItemType.Grass) {
             sprite = new Sprite(Sprite.SpriteDictionary ["Grass"]);
         }
 
