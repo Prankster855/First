@@ -12,6 +12,7 @@ namespace First.MainGame {
     public class Light {
 
         //TODO: color
+        //TODO: 4x resample lighting <3
 
         #region GameObject
         [JsonProperty(PropertyName = "p")]

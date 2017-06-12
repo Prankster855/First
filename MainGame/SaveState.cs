@@ -39,6 +39,7 @@ namespace First.MainGame {
         void SaveWorld() {
             Handler.world.globallight = Light.globalLight;
             world = Handler.world;
+            Console.WriteLine("SAVE WORLD");
         }
 
         void SaveLights() {
@@ -75,6 +76,8 @@ namespace First.MainGame {
             }
             Handler.world.night = ss.world.night;
             Handler.world.time = ss.world.time;
+
+            Console.WriteLine("LOAD WORLD");
         }
         void LoadLights(SaveState ss) {
             Light.lights = ss.lights;

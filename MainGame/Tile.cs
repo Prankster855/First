@@ -26,6 +26,11 @@ namespace First.MainGame {
             this.position = position;
         }
 
+        public void Tick() {
+            top.Tick();
+            bottom.Tick();
+        }
+
         public void Update() {
             bottom.Update();
             top.Update();
@@ -54,7 +59,6 @@ namespace First.MainGame {
                 top.UnHold();
             }
         }
-
 
         public void Render(SpriteBatch sb) {
             if(top.isOpaque) {
