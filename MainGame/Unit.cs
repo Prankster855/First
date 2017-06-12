@@ -43,14 +43,20 @@ namespace First.MainGame {
 
         }
 
+        public void Tick() {
 
-        public virtual void Drop() {
-            Handler.addGameObject(new GroundItem(this));
-            parent.top = new Air(parent);
         }
 
         public void Update() {
 
+        }
+
+        public void Render(SpriteBatch sb, int layer) {
+            sprite.Draw(sb, parent.position, (int) parent.layer + layer);
+        }
+
+        public virtual void Interact(MouseButton mb) {
+            Console.WriteLine("Clicked on " + parent.position + " : " + this);
         }
 
         public void Hold() {
@@ -75,16 +81,12 @@ namespace First.MainGame {
             }
         }
 
-
-        public virtual void Interact(MouseButton mb) {
-            Console.WriteLine("Clicked on " + parent.position + " : " + this);
+        public virtual void Drop() {
+            Handler.addGameObject(new GroundItem(this));
+            parent.top = new Air(parent);
         }
 
 
-
-        public void Render(SpriteBatch sb, int layer) {
-            sprite.Draw(sb, parent.position, (int) parent.layer + layer);
-        }
 
         public static Unit getUnit(Tile parent, ItemType it) {
             switch(it) {

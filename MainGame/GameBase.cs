@@ -86,10 +86,10 @@ namespace First.MainGame {
             elapsed += Time.deltaTime;
 
             while(elapsed > 2f) {
-                elapsed -= 1f;
-                Console.WriteLine((1 / Time.deltaTime) + " fps");
-                Console.WriteLine(Handler.world.map.Count);
-                Console.WriteLine(Handler.world.time % 32);
+                elapsed -= 2f;
+                Console.WriteLine("FPS: " + (1 / Time.deltaTime));
+                Console.WriteLine("TILES: " + Handler.world.map.Count);
+                Console.WriteLine("CURRENT TICK: " + Handler.world.tick);
             }
 
 

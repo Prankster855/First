@@ -13,19 +13,26 @@ namespace First.MainGame {
     public class World {
         [JsonIgnore]
         public const int TileSize = 32;
-
+        [JsonIgnore]
+        public const int TickRate = 30;
         [JsonIgnore]
         private int daylength = 30;
+
         public float time = 0;
+        private float nexttick = 0;
+        [JsonIgnore]
+        public int tick = 0;
+
         public float globallight;
         public bool night = false;
 
-        //tiles
         public Dictionary <Vector2, Tile> map = new Dictionary<Vector2, Tile>();
+
         [JsonIgnore]
         public List<Tile> visible = new List<Tile>();
 
         //rendering
+        [JsonIgnore]
         public const float layerincrement = 1f/2048f;
 
         #region Random
@@ -37,6 +44,7 @@ namespace First.MainGame {
 
         public void Update() {
             time += Time.deltaTime;
+            nexttick += Time.deltaTime;
             float g = time % daylength;
 
             if(!night) {
@@ -61,6 +69,12 @@ namespace First.MainGame {
                 t.Update();
             }
 
+            while(nexttick > 1f / TickRate) {
+                nexttick -= 1f / TickRate;
+                tick++;
+                tickTiles();
+            }
+
             //process visible lights
             Light.processVisibleLights();
 
@@ -70,6 +84,22 @@ namespace First.MainGame {
             //handle mouse input
             processMouseInput();
 
+        }
+
+        private void tickTiles() {
+            for(var x = (int) ((Camera.Pos.X / World.TileSize) - Math.Round(GraphicalSettings.screensize.X / 2 / World.TileSize)) - 32;
+                x < (int) ((Camera.Pos.X / World.TileSize) + Math.Round(GraphicalSettings.screensize.X / 2 / World.TileSize)) + 32; x++) {
+                for(var y = (int) ((Camera.Pos.Y / World.TileSize) - Math.Round(GraphicalSettings.screensize.Y / 2 / World.TileSize)) - 32;
+                    y < (int) ((Camera.Pos.Y / World.TileSize) + Math.Round(GraphicalSettings.screensize.Y / 2 / World.TileSize)) + 32; y++) {
+
+                    Vector2 f = new Vector2(x, y);
+                    if(!map.ContainsKey(f)) {
+                        createTile(f);
+                    }
+                    map [f].Tick();
+                }
+
+            }
         }
 
         private void createTile(Vector2 position) {
@@ -102,6 +132,8 @@ namespace First.MainGame {
 
             }
         }
+
+
 
         private void processMouseInput() {
             Vector2 b = Handler.mouseToWorld(Input.mousestate) + new Vector2(-.5f, -.5f);
