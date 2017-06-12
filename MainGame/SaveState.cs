@@ -19,7 +19,6 @@ namespace First.MainGame {
         string path = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) + @"/saves/save.json";
 
         public void Save() {
-            //TODO: save time
             SaveWorld();
             SavePlayer();
             SaveLights();
@@ -38,6 +37,7 @@ namespace First.MainGame {
 
         #region SAVE
         void SaveWorld() {
+            Handler.world.globallight = Light.globalLight;
             world = Handler.world;
         }
 
@@ -73,9 +73,12 @@ namespace First.MainGame {
                 t.top = Unit.getUnit(t, ss.world.map [v].top.type);
                 Handler.world.map.Add(v, t);
             }
+            Handler.world.night = ss.world.night;
+            Handler.world.time = ss.world.time;
         }
         void LoadLights(SaveState ss) {
             Light.lights = ss.lights;
+            Light.globalLight = ss.world.globallight;
         }
 
         void LoadPlayer(SaveState ss) {

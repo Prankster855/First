@@ -85,10 +85,11 @@ namespace First.MainGame {
             Time.deltaTime = (float) gameTime.ElapsedGameTime.TotalSeconds;
             elapsed += Time.deltaTime;
 
-            while(elapsed > 1f) {
+            while(elapsed > 2f) {
                 elapsed -= 1f;
                 Console.WriteLine((1 / Time.deltaTime) + " fps");
                 Console.WriteLine(Handler.world.map.Count);
+                Console.WriteLine(Handler.world.time % 32);
             }
 
 

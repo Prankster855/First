@@ -16,6 +16,9 @@ namespace First.MainGame {
 
         [JsonIgnore]
         private int daylength = 30;
+        public float time = 0;
+        public float globallight;
+        public bool night = false;
 
         //tiles
         public Dictionary <Vector2, Tile> map = new Dictionary<Vector2, Tile>();
@@ -32,23 +35,23 @@ namespace First.MainGame {
         private Vector2 held = Vector2.Zero;
         #endregion
 
-        bool night = false;
-
         public void Update() {
+            time += Time.deltaTime;
+            float g = time % daylength;
 
             if(!night) {
                 Light.globalLight += Time.deltaTime / daylength;
                 if(Light.globalLight >= Light.maxlight) {
                     night = true;
+                    Light.globalLight = Light.maxlight;
                 }
             } else {
                 Light.globalLight -= Time.deltaTime / daylength;
                 if(Light.globalLight <= Light.minlight) {
                     night = false;
+                    Light.globalLight = Light.minlight;
                 }
             }
-
-
 
             //Find visible tiles in screenspace
             processVisibleTiles();
