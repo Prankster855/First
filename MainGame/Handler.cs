@@ -11,6 +11,8 @@ using System.Threading.Tasks;
 namespace First.MainGame {
     public class Handler {
 
+        public static World world = new World();
+
         public static List<GameObject> gameObjects = new List<GameObject>();
         private static List<GameObject> removeQueue = new List<GameObject>();
         public static SaveState savestate = new SaveState();
@@ -34,7 +36,7 @@ namespace First.MainGame {
 
         static public void Update() {
             Input.Update();
-            World.Update();
+            world.Update();
             Camera.Update();
             foreach(var go in gameObjects) {
                 go.Update();
@@ -52,7 +54,7 @@ namespace First.MainGame {
                     go.Render(sb);
                 }
             }
-            World.Render(sb);
+            Handler.world.Render(sb);
         }
 
 

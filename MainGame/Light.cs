@@ -97,7 +97,7 @@ namespace First.MainGame {
 
         public static void processLightMap() {
             LightMap.Clear();
-            foreach(Tile t in World.visible) {
+            foreach(Tile t in Handler.world.visible) {
                 addToLightMap(t.position, globalLight);
 
                 foreach(List<Light> ll in visibleLights.Values) {
@@ -133,7 +133,7 @@ namespace First.MainGame {
         }
 
         public static void Render(SpriteBatch sb, bool b) {
-            foreach(Tile t in World.visible) {
+            foreach(Tile t in Handler.world.visible) {
                 Vector2 v = t.position;
 
                 sb.Draw(Sprite.SpriteDictionary ["Black"], v * World.TileSize,

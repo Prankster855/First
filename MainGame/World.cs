@@ -11,30 +11,30 @@ using System.IO;
 
 namespace First.MainGame {
     public class World {
+        [JsonIgnore]
+        public const int TileSize = 32;
 
-        public static int TileSize = 32;
-
-        static Vector2 offset = Vector2.Zero;
-
-        static private int daylength = 30;
+        [JsonIgnore]
+        private int daylength = 30;
 
         //tiles
-        public static Dictionary <Vector2, Tile> map = new Dictionary<Vector2, Tile>();
-        public static List<Tile> visible = new List<Tile>();
+        public Dictionary <Vector2, Tile> map = new Dictionary<Vector2, Tile>();
+        [JsonIgnore]
+        public List<Tile> visible = new List<Tile>();
 
         //rendering
         public const float layerincrement = 1f/2048f;
 
         #region Random
-        public static int seed=0;
-        private static Vector2 oldHeld;
-        private static Vector2 held = Vector2.Zero;
+        [JsonIgnore]
+        public int seed=0;
+        private Vector2 oldHeld;
+        private Vector2 held = Vector2.Zero;
         #endregion
 
-        static bool night = false;
+        bool night = false;
 
-
-        static public void Update() {
+        public void Update() {
 
             if(!night) {
                 Light.globalLight += Time.deltaTime / daylength;
@@ -69,7 +69,7 @@ namespace First.MainGame {
 
         }
 
-        static private void createTile(Vector2 position) {
+        private void createTile(Vector2 position) {
             seed++;
             int baseseed = (int) DateTime.Now.Ticks;
             Random rnd = new Random(baseseed + seed);
@@ -86,7 +86,7 @@ namespace First.MainGame {
 
         }
 
-        static private void processVisibleTiles() {
+        private void processVisibleTiles() {
             visible.Clear();
             for(var x = (int) ((Camera.Pos.X / World.TileSize) - Math.Round(GraphicalSettings.screensize.X / 2 / World.TileSize)) - 2; x < (int) ((Camera.Pos.X / World.TileSize) + Math.Round(GraphicalSettings.screensize.X / 2 / World.TileSize)) + 2; x++) {
                 for(var y = (int) ((Camera.Pos.Y / World.TileSize) - Math.Round(GraphicalSettings.screensize.Y / 2 / World.TileSize)) - 2; y < (int) ((Camera.Pos.Y / World.TileSize) + Math.Round(GraphicalSettings.screensize.Y / 2 / World.TileSize)) + 2; y++) {
@@ -100,7 +100,7 @@ namespace First.MainGame {
             }
         }
 
-        static private void processMouseInput() {
+        private void processMouseInput() {
             Vector2 b = Handler.mouseToWorld(Input.mousestate) + new Vector2(-.5f, -.5f);
             Vector2 a = new Vector2((float) Math.Round(b.X), (float) Math.Round(b.Y));
             oldHeld = held;
@@ -129,7 +129,7 @@ namespace First.MainGame {
             }
         }
 
-        static public void Render(SpriteBatch sb) {
+        public void Render(SpriteBatch sb) {
 
             foreach(Tile t in visible) {
                 t.Render(sb);

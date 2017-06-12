@@ -15,10 +15,11 @@ namespace First.MainGame {
 
         public Player player;
         public List<Light> lights;
-        public Dictionary <Vector2, Tile> map;
+        public World world;
         string path = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) + @"/saves/save.json";
 
         public void Save() {
+            //TODO: save time
             SaveWorld();
             SavePlayer();
             SaveLights();
@@ -37,7 +38,7 @@ namespace First.MainGame {
 
         #region SAVE
         void SaveWorld() {
-            map = World.map;
+            world = Handler.world;
         }
 
         void SaveLights() {
@@ -65,12 +66,12 @@ namespace First.MainGame {
                     gi.Delete();
                 }
             }
-            World.map.Clear();
-            foreach(Vector2 v in ss.map.Keys) {
+            Handler.world.map.Clear();
+            foreach(Vector2 v in ss.world.map.Keys) {
                 Tile t = new Tile(v);
-                t.bottom = Unit.getUnit(t, ss.map [v].bottom.type);
-                t.top = Unit.getUnit(t, ss.map [v].top.type);
-                World.map.Add(v, t);
+                t.bottom = Unit.getUnit(t, ss.world.map [v].bottom.type);
+                t.top = Unit.getUnit(t, ss.world.map [v].top.type);
+                Handler.world.map.Add(v, t);
             }
         }
         void LoadLights(SaveState ss) {

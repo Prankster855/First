@@ -66,7 +66,6 @@ namespace First.MainGame {
         }
 
         protected override void UnloadContent() {
-            Dictionary<Vector2, Tile> map = World.map;
             Handler.savestate.Save();
         }
 
@@ -89,7 +88,7 @@ namespace First.MainGame {
             while(elapsed > 1f) {
                 elapsed -= 1f;
                 Console.WriteLine((1 / Time.deltaTime) + " fps");
-                Console.WriteLine(World.map.Count);
+                Console.WriteLine(Handler.world.map.Count);
             }
 
 
