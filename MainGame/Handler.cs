@@ -7,6 +7,7 @@ using Microsoft.Xna.Framework.Content;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Diagnostics;
 
 namespace First.MainGame {
     public class Handler {
@@ -35,6 +36,7 @@ namespace First.MainGame {
         }
 
         static public void Update() {
+
             Input.Update();
             world.Update();
             Camera.Update();
@@ -56,9 +58,6 @@ namespace First.MainGame {
             }
             Handler.world.Render(sb);
         }
-
-
-
 
     }
 }

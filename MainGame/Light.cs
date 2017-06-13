@@ -11,7 +11,8 @@ using Newtonsoft.Json;
 namespace First.MainGame {
     public class Light {
 
-        //TODO: color
+        //TODO: color the lights!!
+        //TODO: custom resample size?
 
         #region GameObject
         [JsonProperty(PropertyName = "p")]
@@ -43,6 +44,7 @@ namespace First.MainGame {
         public static List<Light> lights = new List<Light>();
         public static Dictionary<Vector2, List<Light>> visibleLights = new Dictionary<Vector2, List<Light>>();
         public static Dictionary<Vector2, float> LightMap = new Dictionary<Vector2, float>();
+        public static List<Vector2> resample = new List<Vector2>();
 
         #region Add/Remove
         static public void addLight(Light light) {
@@ -70,7 +72,7 @@ namespace First.MainGame {
             }
 
             visibleLights.Clear();
-            int extend = 20;
+            int extend = 5;
             for(var x = (int) ((Camera.Pos.X / World.TileSize) - Math.Round(GraphicalSettings.screensize.X / 2 / World.TileSize)) - extend; x < (int) ((Camera.Pos.X / World.TileSize) + Math.Round(GraphicalSettings.screensize.X / 2 / World.TileSize)) + extend; x++) {
                 for(var y = (int) ((Camera.Pos.Y / World.TileSize) - Math.Round(GraphicalSettings.screensize.Y / 2 / World.TileSize)) - extend; y < (int) ((Camera.Pos.Y / World.TileSize) + Math.Round(GraphicalSettings.screensize.Y / 2 / World.TileSize)) + extend; y++) {
 
@@ -94,26 +96,28 @@ namespace First.MainGame {
                 visibleLights [v].Add(l);
             }
         }
-        public static List<Vector2> temp = new List<Vector2>();
+
         public static void processLightMap() {
             LightMap.Clear();
-            temp.Clear();
+            resample.Clear();
             foreach(Tile t in Handler.world.visible) {
-                temp.Add(new Vector2(t.position.X + 0f, t.position.Y + 0f));
-                temp.Add(new Vector2(t.position.X + .5f, t.position.Y + 0f));
-                temp.Add(new Vector2(t.position.X + 0f, t.position.Y + .5f));
-                temp.Add(new Vector2(t.position.X + .5f, t.position.Y + .5f));
+                resample.Add(new Vector2(t.position.X + 0f, t.position.Y + 0f));
+                resample.Add(new Vector2(t.position.X + .5f, t.position.Y + 0f));
+                resample.Add(new Vector2(t.position.X + 0f, t.position.Y + .5f));
+                resample.Add(new Vector2(t.position.X + .5f, t.position.Y + .5f));
             }
-            foreach(Vector2 v in temp) {
+            foreach(Vector2 v in resample) {
 
                 addToLightMap(v, globalLight);
 
                 foreach(List<Light> ll in visibleLights.Values) {
                     foreach(Light l in ll) {
 
-                        float dis = Vector2.Distance(v, l.position);
-                        if(dis <= l.radius) {
-                            addToLightMap(v, (dis / l.radius) * l.intensity);
+                        //float dis = Vector2.Distance(v, l.position);
+                        float dis = ((v.X - l.position.X) * (v.X - l.position.X)) + ((v.Y - l.position.Y) * (v.Y - l.position.Y));
+                        float r = l.radius * l.radius;
+                        if(dis <= r) {
+                            addToLightMap(v, (dis / r) * l.intensity);
 
                         }
                     }
@@ -123,7 +127,7 @@ namespace First.MainGame {
 
         }
 
-        private static void addToLightMap(Vector2 v, float f) {
+        static void addToLightMap(Vector2 v, float f) {
             if(LightMap.ContainsKey(v)) {
                 LightMap [v] = f * LightMap [v];
             } else {
@@ -145,7 +149,7 @@ namespace First.MainGame {
         }
 
         public static void Render(SpriteBatch sb, bool b) {
-            foreach(Vector2 v in temp) {
+            foreach(Vector2 v in resample) {
                 sb.Draw(Sprite.SpriteDictionary ["Black"], v * World.TileSize,
                         null, new Color(255, 255, 255, (int) (getLightMap(v) * 255)), 0f, Vector2.Zero, 1f, SpriteEffects.None, (float) Layer.Light / 2048);
             }

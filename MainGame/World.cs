@@ -8,6 +8,8 @@ using First.MainGame.Units;
 using Microsoft.Xna.Framework;
 using Newtonsoft.Json;
 using System.IO;
+using First.MainGame.GameObjects;
+using System.Diagnostics;
 
 namespace First.MainGame {
     public class World {
@@ -16,8 +18,7 @@ namespace First.MainGame {
         [JsonIgnore]
         public const int TickRate = 30;
         [JsonIgnore]
-        private int daylength = 30;
-
+        private int daylength = 60;
         public float time = 0;
         private float nexttick = 0;
         [JsonIgnore]
@@ -31,7 +32,6 @@ namespace First.MainGame {
         [JsonIgnore]
         public List<Tile> visible = new List<Tile>();
 
-        //rendering
         [JsonIgnore]
         public const float layerincrement = 1f/2048f;
 
@@ -42,11 +42,16 @@ namespace First.MainGame {
         private Vector2 held = Vector2.Zero;
         #endregion
 
+        private Vector2 lastplayerpos;
+
         public void Update() {
             time += Time.deltaTime;
             nexttick += Time.deltaTime;
             float g = time % daylength;
 
+
+            //TODO: fix eternal darkness thing
+            //TODO: refactor
             if(!night) {
                 Light.globalLight += Time.deltaTime / daylength;
                 if(Light.globalLight >= Light.maxlight) {
@@ -61,13 +66,14 @@ namespace First.MainGame {
                 }
             }
 
-            //Find visible tiles in screenspace
-            processVisibleTiles();
-
-            //update visible tiles
-            foreach(Tile t in visible) {
-                t.Update();
+            //TODO: check if player moves a certain distance then apply
+            if(lastplayerpos != Player.player.position) {
+                processVisibleTiles();
+                //process visible lights
+                Light.processVisibleLights();
             }
+            //process lightmap
+            Light.processLightMap();
 
             while(nexttick > 1f / TickRate) {
                 nexttick -= 1f / TickRate;
@@ -75,23 +81,18 @@ namespace First.MainGame {
                 tickTiles();
             }
 
-            //process visible lights
-            Light.processVisibleLights();
-
-            //process lightmap
-            Light.processLightMap();
-
-            //handle mouse input
             processMouseInput();
+
+            lastplayerpos = Player.player.position;
 
         }
 
         private void tickTiles() {
-            for(var x = (int) ((Camera.Pos.X / World.TileSize) - Math.Round(GraphicalSettings.screensize.X / 2 / World.TileSize)) - 32;
-                x < (int) ((Camera.Pos.X / World.TileSize) + Math.Round(GraphicalSettings.screensize.X / 2 / World.TileSize)) + 32; x++) {
-                for(var y = (int) ((Camera.Pos.Y / World.TileSize) - Math.Round(GraphicalSettings.screensize.Y / 2 / World.TileSize)) - 32;
-                    y < (int) ((Camera.Pos.Y / World.TileSize) + Math.Round(GraphicalSettings.screensize.Y / 2 / World.TileSize)) + 32; y++) {
-
+            int size = 16;
+            for(var x = (int) ((Camera.Pos.X / World.TileSize) - Math.Round(GraphicalSettings.screensize.X / 2 / World.TileSize)) - size;
+                x < (int) ((Camera.Pos.X / World.TileSize) + Math.Round(GraphicalSettings.screensize.X / 2 / World.TileSize)) + size; x++) {
+                for(var y = (int) ((Camera.Pos.Y / World.TileSize) - Math.Round(GraphicalSettings.screensize.Y / 2 / World.TileSize)) - size;
+                    y < (int) ((Camera.Pos.Y / World.TileSize) + Math.Round(GraphicalSettings.screensize.Y / 2 / World.TileSize)) + size; y++) {
                     Vector2 f = new Vector2(x, y);
                     if(!map.ContainsKey(f)) {
                         createTile(f);
@@ -119,7 +120,7 @@ namespace First.MainGame {
 
         }
 
-        private void processVisibleTiles() {
+        public void processVisibleTiles() {
             visible.Clear();
             for(var x = (int) ((Camera.Pos.X / World.TileSize) - Math.Round(GraphicalSettings.screensize.X / 2 / World.TileSize)) - 2; x < (int) ((Camera.Pos.X / World.TileSize) + Math.Round(GraphicalSettings.screensize.X / 2 / World.TileSize)) + 2; x++) {
                 for(var y = (int) ((Camera.Pos.Y / World.TileSize) - Math.Round(GraphicalSettings.screensize.Y / 2 / World.TileSize)) - 2; y < (int) ((Camera.Pos.Y / World.TileSize) + Math.Round(GraphicalSettings.screensize.Y / 2 / World.TileSize)) + 2; y++) {
@@ -132,8 +133,6 @@ namespace First.MainGame {
 
             }
         }
-
-
 
         private void processMouseInput() {
             Vector2 b = Handler.mouseToWorld(Input.mousestate) + new Vector2(-.5f, -.5f);

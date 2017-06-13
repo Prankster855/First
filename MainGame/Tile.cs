@@ -31,10 +31,6 @@ namespace First.MainGame {
             bottom.Tick();
         }
 
-        public void Update() {
-            bottom.Update();
-            top.Update();
-        }
 
         public void Interact(MouseButton mb) {
             if(top is Air) {

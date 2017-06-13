@@ -46,7 +46,7 @@ namespace First.MainGame.GameObjects {
             reach = 4;
             movementDistance = (1f / 4f);
             speed = 2.5f;
-
+            elapsed = 0f;
             light = new Light(position, 4, .25f, Color.White);
             Light.addLight(light);
         }
@@ -55,8 +55,9 @@ namespace First.MainGame.GameObjects {
             base.Update();
 
             light.position = position;
-
-            elapsed += Time.deltaTime;
+            if(elapsed < (1f / (speed / movementDistance))) {
+                elapsed += Time.deltaTime;
+            }
             if(elapsed > (1f / (speed / movementDistance))) {
                 Camera.zoomtarget = 2f;
                 Movement();
@@ -66,11 +67,11 @@ namespace First.MainGame.GameObjects {
         }
 
         void Movement() {
-            if(Input.keyboardstate.IsKeyDown(Keys.T)) {
-                Handler.savestate.Load();
-            }
             if(Input.keyboardstate.IsKeyDown(Keys.R)) {
                 Handler.savestate.Save();
+            }
+            if(Input.keyboardstate.IsKeyDown(Keys.T)) {
+                Handler.savestate.Load();
             }
 
             if(alternateMovement) {
@@ -79,28 +80,28 @@ namespace First.MainGame.GameObjects {
                     //right
                     position.X += movementDistance;
 
-                    elapsed = 0f;
+                    elapsed -= (1f / (speed / movementDistance));
                     return;
                 }
                 if(Input.keyboardstate.IsKeyDown(Keys.A)) {
                     //left
                     position.X += -movementDistance;
 
-                    elapsed = 0f;
+                    elapsed -= (1f / (speed / movementDistance));
                     return;
                 }
                 if(Input.keyboardstate.IsKeyDown(Keys.W)) {
                     //up
                     position.Y += -movementDistance;
 
-                    elapsed = 0f;
+                    elapsed -= (1f / (speed / movementDistance));
                     return;
                 }
                 if(Input.keyboardstate.IsKeyDown(Keys.S)) {
                     //down
                     position.Y += movementDistance;
 
-                    elapsed = 0f;
+                    elapsed -= (1f / (speed / movementDistance));
                     return;
                 }
 
@@ -111,21 +112,22 @@ namespace First.MainGame.GameObjects {
                     //up
                     position.Y += -movementDistance;
 
-                    elapsed = 0f;
+                    elapsed -= (1f / (speed / movementDistance));
                     return;
                 }
                 if(Input.keyboardstate.IsKeyDown(Keys.S)) {
                     //down
                     position.Y += movementDistance;
 
-                    elapsed = 0f;
+                    elapsed -= (1f / (speed / movementDistance));
+
                     return;
                 }
                 if(Input.keyboardstate.IsKeyDown(Keys.A)) {
                     //left
                     position.X += -movementDistance;
 
-                    elapsed = 0f;
+                    elapsed -= (1f / (speed / movementDistance));
                     return;
                 }
 
@@ -133,7 +135,7 @@ namespace First.MainGame.GameObjects {
                     //right
                     position.X += movementDistance;
 
-                    elapsed = 0f;
+                    elapsed -= (1f / (speed / movementDistance));
                     return;
                 }
 
