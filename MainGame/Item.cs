@@ -15,11 +15,11 @@ namespace First.MainGame {
             ItemDictionary.Add(it, sprite);
         }
 
-        public ItemType it;
+        public ItemType type;
 
-        public Item(ItemType it) : base(Vector2.Zero) {
-            this.it = it;
-            sprite = Item.ItemDictionary [it];
+        public Item(ItemType type) : base(Vector2.Zero) {
+            this.type = type;
+            sprite = Item.ItemDictionary [type];
         }
 
     }

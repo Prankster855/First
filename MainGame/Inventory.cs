@@ -10,7 +10,7 @@ namespace First.MainGame {
         int width = 1;
         int height = 1;
 
-        ItemStack[,] contents;
+        public ItemStack[,] contents;
 
         public Inventory(int width, int height) {
             this.width = width;
@@ -25,7 +25,19 @@ namespace First.MainGame {
         }
 
         public void addItem(Item item) {
-            //TODO: add item management
+            Console.WriteLine("ADDED TO INVENTORY");
+
+            for(int y = 0; y < height; y++) {
+                for(int x = 0; x < width; x++) {
+                    if(contents [x, y].type == ItemType.Air) {
+                        contents [x, y].addItem(item.type);
+                        return;
+                    }
+                }
+            }
+
+
+
         }
 
 

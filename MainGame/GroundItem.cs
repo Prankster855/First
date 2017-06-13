@@ -34,8 +34,7 @@ namespace First.MainGame {
         }
 
         public void PickUp() {
-            Console.WriteLine("Picked up a " + item);
-            //TODO: add item to players inventory
+            Player.player.inventory.addItem(item);
             Delete();
         }
 
@@ -48,7 +47,7 @@ namespace First.MainGame {
             if(dis <= 2.25f) {
                 position += (p.position - position) * Time.deltaTime * speed;
             }
-            if(dis <= .4f) {
+            if(dis <= .75f) {
                 PickUp();
             }
 

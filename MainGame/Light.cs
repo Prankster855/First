@@ -40,9 +40,9 @@ namespace First.MainGame {
         }
         #endregion
 
-        public static float globalLight = maxlight;
-        public static float minlight = .2f;
-        public static float maxlight = .6f;
+        public static float globalLight = .25f;
+        public static float minlight = .25f;
+        public static float maxlight = .55f;
         public static List<Light> lights = new List<Light>();
         public static Dictionary<Vector2, List<Light>> visibleLights = new Dictionary<Vector2, List<Light>>();
         public static Dictionary<Vector2, float> LightMap = new Dictionary<Vector2, float>();

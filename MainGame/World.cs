@@ -66,6 +66,7 @@ namespace First.MainGame {
                 //process lightmap
                 if(!didProcessLightMap && tick % 2 == 0) {
                     Light.processLightMap();
+                    didProcessLightMap = true;
                 }
                 tickTiles();
             }
@@ -77,8 +78,7 @@ namespace First.MainGame {
 
         }
         private void doDayLightCycle() {
-            //float g = time % daylength;
-            //TODO: fix eternal darkness thing
+            //TODO: more smooth transitions, not just up/down light
             if(!night) {
                 Light.globalLight += (1f / TickRate) / daylength;
                 if(Light.globalLight >= Light.maxlight) {

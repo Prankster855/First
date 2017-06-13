@@ -21,7 +21,7 @@ namespace First.MainGame.GameObjects {
             }
         }
 
-        public Inventory inventory = new Inventory(20,20);
+        public Inventory inventory;
 
         //TODO: Collisions?
         Vector2 direction;
@@ -41,6 +41,7 @@ namespace First.MainGame.GameObjects {
 
         public override void Init() {
             base.Init();
+            inventory = new Inventory(20, 20);
             alternateMovement = false;
             direction = new Vector2(0, 0);
             reach = 4;
