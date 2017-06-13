@@ -43,49 +43,57 @@ namespace First.MainGame {
         #endregion
 
         private Vector2 lastplayerpos;
-
+        bool didProcessLightMap;
         public void Update() {
             time += Time.deltaTime;
             nexttick += Time.deltaTime;
-            float g = time % daylength;
-
-
-            //TODO: fix eternal darkness thing
-            //TODO: refactor
-            if(!night) {
-                Light.globalLight += Time.deltaTime / daylength;
-                if(Light.globalLight >= Light.maxlight) {
-                    night = true;
-                    Light.globalLight = Light.maxlight;
-                }
-            } else {
-                Light.globalLight -= Time.deltaTime / daylength;
-                if(Light.globalLight <= Light.minlight) {
-                    night = false;
-                    Light.globalLight = Light.minlight;
-                }
-            }
 
             //TODO: check if player moves a certain distance then apply
             if(lastplayerpos != Player.player.position) {
                 processVisibleTiles();
                 //process visible lights
                 Light.processVisibleLights();
+                Light.processLightMap();
+                didProcessLightMap = true;
             }
-            //process lightmap
-            Light.processLightMap();
 
+
+            //tick
             while(nexttick > 1f / TickRate) {
                 nexttick -= 1f / TickRate;
                 tick++;
+                doDayLightCycle();
+                //process lightmap
+                if(!didProcessLightMap && tick % 2 == 0) {
+                    Light.processLightMap();
+                }
                 tickTiles();
             }
 
             processMouseInput();
 
             lastplayerpos = Player.player.position;
+            didProcessLightMap = false;
 
         }
+        private void doDayLightCycle() {
+            //float g = time % daylength;
+            //TODO: fix eternal darkness thing
+            if(!night) {
+                Light.globalLight += (1f / TickRate) / daylength;
+                if(Light.globalLight >= Light.maxlight) {
+                    night = true;
+                    Light.globalLight = Light.maxlight;
+                }
+            } else {
+                Light.globalLight -= (1f / TickRate) / daylength;
+                if(Light.globalLight <= Light.minlight) {
+                    night = false;
+                    Light.globalLight = Light.minlight;
+                }
+            }
+        }
+
 
         private void tickTiles() {
             int size = 16;
