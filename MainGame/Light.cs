@@ -12,7 +12,6 @@ namespace First.MainGame {
     public class Light {
 
         //TODO: color
-        //TODO: 4x resample lighting <3
 
         #region GameObject
         [JsonProperty(PropertyName = "p")]
@@ -95,21 +94,33 @@ namespace First.MainGame {
                 visibleLights [v].Add(l);
             }
         }
-
+        public static List<Vector2> temp = new List<Vector2>();
         public static void processLightMap() {
             LightMap.Clear();
+            temp.Clear();
             foreach(Tile t in Handler.world.visible) {
-                addToLightMap(t.position, globalLight);
+                temp.Add(new Vector2(t.position.X + 0f, t.position.Y + 0f));
+                temp.Add(new Vector2(t.position.X + .5f, t.position.Y + 0f));
+                temp.Add(new Vector2(t.position.X + 0f, t.position.Y + .5f));
+                temp.Add(new Vector2(t.position.X + .5f, t.position.Y + .5f));
+            }
+            foreach(Vector2 v in temp) {
+
+                addToLightMap(v, globalLight);
 
                 foreach(List<Light> ll in visibleLights.Values) {
                     foreach(Light l in ll) {
-                        float dis = Vector2.Distance(t.position, l.position);
+
+                        float dis = Vector2.Distance(v, l.position);
                         if(dis <= l.radius) {
-                            addToLightMap(t.position, (dis / l.radius) * l.intensity);
+                            addToLightMap(v, (dis / l.radius) * l.intensity);
+
                         }
                     }
                 }
+
             }
+
         }
 
         private static void addToLightMap(Vector2 v, float f) {
@@ -134,9 +145,7 @@ namespace First.MainGame {
         }
 
         public static void Render(SpriteBatch sb, bool b) {
-            foreach(Tile t in Handler.world.visible) {
-                Vector2 v = t.position;
-
+            foreach(Vector2 v in temp) {
                 sb.Draw(Sprite.SpriteDictionary ["Black"], v * World.TileSize,
                         null, new Color(255, 255, 255, (int) (getLightMap(v) * 255)), 0f, Vector2.Zero, 1f, SpriteEffects.None, (float) Layer.Light / 2048);
             }
