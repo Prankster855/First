@@ -57,7 +57,9 @@ namespace First.MainGame {
                 }
             }
             Handler.world.Render(sb);
+            //Console.WriteLine(Sprite.drawcalls);
         }
+
 
     }
 }

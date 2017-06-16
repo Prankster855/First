@@ -14,6 +14,10 @@ namespace First.MainGame {
         SpriteBatch spriteBatch;
         Viewport viewport;
 
+        //TODO: text rendering
+        //TODO: sound engine
+        //TODO: particle system
+
         public Handler handler;
 
         public Game1() {
@@ -82,17 +86,30 @@ namespace First.MainGame {
         }
 
         private float elapsed = 0;
+        List<float> avg = new List<float>();
         protected override void Update(GameTime gameTime) {
             Camera.matrix = Camera.get_transformation(GraphicsDevice);
             Time.deltaTime = (float) gameTime.ElapsedGameTime.TotalSeconds;
             elapsed += Time.deltaTime;
+            avg.Add(Time.deltaTime);
 
             while(elapsed > 2f) {
+                float t = 0;
+                foreach(float a in avg) {
+                    t += a;
+                }
+                t /= avg.Count;
+                avg.Clear();
+
+
                 elapsed -= 2f;
-                Console.WriteLine("FPS: " + (1 / Time.deltaTime));
+                Console.WriteLine(DateTime.Now.ToString("h:mm:ss tt"));
+                Console.WriteLine("AVG FPS: " + (1 / t));
                 Console.WriteLine("TILES: " + Handler.world.map.Count);
                 Console.WriteLine("CURRENT TICK: " + Handler.world.tick);
+                Console.WriteLine("DRAW CALLS: " + Sprite.drawcalls);
             }
+            Sprite.drawcalls = 0;
 
 
             //emergency exit

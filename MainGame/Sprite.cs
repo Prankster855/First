@@ -10,6 +10,8 @@ using First.MainGame;
 namespace First.MainGame {
     public class Sprite {
 
+        public static int drawcalls = 0;
+
         public static Dictionary<String, Texture2D> SpriteDictionary = new Dictionary<string, Texture2D>();
 
         public static void AddSprite(String name, Texture2D sprite) {
@@ -41,7 +43,7 @@ namespace First.MainGame {
         }
 
         public void Draw(SpriteBatch sb, Vector2 position, int layer, float scale) {
-
+            drawcalls++;
             Vector2 a = Camera.Pos / World.TileSize;
             sb.Draw(sprite, new Vector2(
                             (position.X * World.TileSize),

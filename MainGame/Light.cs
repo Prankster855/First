@@ -108,7 +108,6 @@ namespace First.MainGame {
                 resample.Add(new Vector2(t.position.X + 0f, t.position.Y + .5f));
                 resample.Add(new Vector2(t.position.X + .5f, t.position.Y + .5f));
             }
-
             //instead of going through every position of resample, find what SHOULD be by the lights
             foreach(Vector2 v in resample) {
                 addToLightMap(v, globalLight);
@@ -148,8 +147,6 @@ namespace First.MainGame {
                 }
 
             }
-
-            //old code
             /*
             foreach(Vector2 v in resample) {
 
@@ -193,8 +190,11 @@ namespace First.MainGame {
 
         }
 
+        //TODO: if a tile isnt affected, make transparent to x, and have a black background within game
+
         public static void Render(SpriteBatch sb, bool b) {
             foreach(Vector2 v in resample) {
+                Sprite.drawcalls++;
                 sb.Draw(Sprite.SpriteDictionary ["Black"], v * World.TileSize,
                         null, new Color(255, 255, 255,
                         (int) (getLightMap(v) * 255)), 0f, Vector2.Zero, 1f, SpriteEffects.None, (float) Layer.Light / 2048);

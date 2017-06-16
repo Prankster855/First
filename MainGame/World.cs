@@ -13,6 +13,8 @@ using System.Diagnostics;
 
 namespace First.MainGame {
     public class World {
+
+        public List<int> times = new List<int>();
         [JsonIgnore]
         public const int TileSize = 32;
         [JsonIgnore]
@@ -23,7 +25,6 @@ namespace First.MainGame {
         private float nexttick = 0;
         [JsonIgnore]
         public int tick = 0;
-
         public float globallight;
         public bool night = false;
 
@@ -176,9 +177,7 @@ namespace First.MainGame {
             foreach(Tile t in visible) {
                 t.Render(sb);
             }
-
             Light.Render(sb, true);
-
         }
     }
 }

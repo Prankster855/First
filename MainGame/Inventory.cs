@@ -7,6 +7,8 @@ using System.Threading.Tasks;
 namespace First.MainGame {
     public class Inventory {
 
+        //TODO: inventory visualizer
+
         int width = 1;
         int height = 1;
 
